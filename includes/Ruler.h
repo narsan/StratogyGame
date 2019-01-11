@@ -15,4 +15,4 @@ typedef struct
 
 } Ruler;
 
-#endif
+#endif  /* !RULER_H */

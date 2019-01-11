@@ -10,7 +10,7 @@ typedef struct
     int  court;
     int  treasury;
 
-} Option;
+} Choices;
 
 
 // a typedef struct for every
@@ -18,9 +18,9 @@ typedef struct
 typedef struct
 {
     char    question[100];
-    Option  options[2];
+    Choices choices[2];
 
 } Problem;
 
 
-#endif
+#endif  /* !PROBLEM_H */
