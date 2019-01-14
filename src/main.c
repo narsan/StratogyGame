@@ -10,7 +10,14 @@
 
 int main()
 {
-    LoadChoices();
+    Node* Ch = LoadChoices();
+    Problem tmp = newProblem(
+        "mamad am che konam",
+        "besik", 5, 0, -5,
+        "bemun", -5, 5, 5
+    );
+    addNewProblem_toGame(Ch, tmp);
+    
     return 0;
 }
 
