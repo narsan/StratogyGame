@@ -7,32 +7,26 @@
 
 typedef struct Node
 {
-    Problem Data;
+    Problem      Data;
+    int          Possibility;
     struct Node* Next;
-
 }Node;
 
-Node* newNode(Problem data, Node* next)
+Node* newNode(Problem data, Node* next, int Poss)
 {
     Node* Tmp = (Node *) malloc(sizeof(Node));
-    Tmp->Data = data;
-    Tmp->Next = next;
+    Tmp->Data           = data;
+    Tmp->Next           = next;
+    Tmp->Possibility    = Poss;
 }
 
-void AddToEnd(Node* head, Problem data)
+void AddTo_FirstOf_List(Node* head, Problem data, int Poss)
 {
-    if(head == NULL)
-        head = newNode(data, NULL);
-    
-    Node* Tmp = head;
-    while(Tmp->Next != NULL)
-        Tmp = Tmp->Next;
-    
-    Tmp->Next = newNode(data, NULL);
+    head = newNode(data, head, Poss);
 }
 
 
-Node * LoadChoices()
+Node * LoadChoices(int* Arr)
 {
     Node* Head = NULL;
 
@@ -41,7 +35,7 @@ Node * LoadChoices()
         printf("error opening CHOICES file...\n");
 
     char Addresses[20];
-
+    int count = 0;
     while(feof(Choices_File) == 0)
     {
         Problem Tmp;
@@ -62,20 +56,10 @@ Node * LoadChoices()
         &Tmp.choices[1].court,
         &Tmp.choices[1].treasury
         );
-
-
-        // printf("%s\n%s\n%d\n%d\n%d\n%s\n%d\n%d\n%d\n",
-        // Tmp.question,
-        // Tmp.choices[0].what,
-        // Tmp.choices[0].people,
-        // Tmp.choices[0].court,
-        // Tmp.choices[0].treasury,
-        // Tmp.choices[1].what,
-        // Tmp.choices[1].people,
-        // Tmp.choices[1].court,
-        // Tmp.choices[1].treasury
-        // );
-        AddToEnd(Head, Tmp);
+        if(Arr != NULL && Arr[count] <= 3 && Arr[count] >= 0)
+            AddTo_FirstOf_List(Head, Tmp, Arr[count++]);
+        else
+            AddTo_FirstOf_List(Head, Tmp, 3);            
         fclose(Fchoice);
     }
     fclose(Choices_File);
@@ -91,6 +75,18 @@ void unLoadChoices(Node* Head)
         free(Head);
         Head = Tmp;
     }
+}
+
+void TestForDelete(Node* Head, Node* Goal)
+{
+    if (Goal != NULL)
+        if(Goal->Possibility <= 0)
+        {
+            Node* BeforeGoal = Head;
+            for(; BeforeGoal->Next != Goal; BeforeGoal= BeforeGoal->Next){}
+            BeforeGoal ->Next = Goal->Next;
+            free(Goal);
+        }
 }
 
 int getLastNumber_OfChoices()
@@ -140,7 +136,7 @@ void addNewProblem_toGame(Node* Head, Problem Pr)
 
     fclose(newFile);
     fclose(Choices_File);
-    AddToEnd(Head, Pr);
+    AddTo_FirstOf_List(Head, Pr, 3);
 }
 
 #endif /* !LIST_H */

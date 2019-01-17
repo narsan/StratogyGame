@@ -6,7 +6,7 @@
 // option
 typedef struct
 {
-    char what[100];
+    char what[200];
     int  people;
     int  court;
     int  treasury;
@@ -18,8 +18,8 @@ typedef struct
 // problem in country
 typedef struct
 {
-    char    question[100];
-    Choice choices[2];
+    char    question[200];
+    Choice  choices[2];
 
 } Problem;
 
