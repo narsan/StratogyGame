@@ -5,6 +5,6 @@
 
 int main()
 {
-    //GameRun();
+    GameRun();
     return 0;
 }

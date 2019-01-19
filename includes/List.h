@@ -22,7 +22,15 @@ Node* newNode(Problem data, Node* next, int Poss)
 
 void AddTo_FirstOf_List(Node* head, Problem data, int Poss)
 {
-    head = newNode(data, head, Poss);
+    
+    if(head == NULL)
+        head = newNode(data, NULL, Poss);
+    
+    Node* Tmp = head;
+    while(Tmp->Next != NULL)
+        Tmp = Tmp->Next;
+    
+    Tmp->Next = newNode(data, NULL, Poss);
 }
 
 
@@ -56,13 +64,12 @@ Node * LoadChoices(int* Arr)
         &Tmp.choices[1].court,
         &Tmp.choices[1].treasury
         );
-        if(Arr != NULL && Arr[count] <= 3 && Arr[count] >= 0)
-            AddTo_FirstOf_List(Head, Tmp, Arr[count++]);
-        else
-            AddTo_FirstOf_List(Head, Tmp, 3);            
+        printf("%d-",count);
+        AddTo_FirstOf_List(Head, Tmp, Arr[count++]);
         fclose(Fchoice);
     }
     fclose(Choices_File);
+    printf("%s",Head->Data.question);
     return Head;
 }
 
