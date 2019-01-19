@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <string.h>
 
+// a typedef struct for
+// a node of list
 typedef struct Node
 {
     Problem      Data;
@@ -12,6 +14,8 @@ typedef struct Node
     struct Node* Next;
 }Node;
 
+// create new node and
+// allocate 
 Node* newNode(Problem data, Node* next, int Poss)
 {
     Node* Tmp = (Node *) malloc(sizeof(Node));
@@ -20,20 +24,15 @@ Node* newNode(Problem data, Node* next, int Poss)
     Tmp->Possibility    = Poss;
 }
 
-void AddTo_FirstOf_List(Node* head, Problem data, int Poss)
+// a fuctrion to add
+// to first of list
+Node* AddTo_FirstOf_List(Node* head, Problem data, int Poss)
 {
-    
-    if(head == NULL)
-        head = newNode(data, NULL, Poss);
-    
-    Node* Tmp = head;
-    while(Tmp->Next != NULL)
-        Tmp = Tmp->Next;
-    
-    Tmp->Next = newNode(data, NULL, Poss);
+    return newNode(data, head, Poss);
 }
 
-
+// load all choices in game
+// from files
 Node * LoadChoices(int* Arr)
 {
     Node* Head = NULL;
@@ -65,7 +64,7 @@ Node * LoadChoices(int* Arr)
         &Tmp.choices[1].treasury
         );
         printf("%d-",count);
-        AddTo_FirstOf_List(Head, Tmp, Arr[count++]);
+        Head = AddTo_FirstOf_List(Head, Tmp, Arr[count++]);
         fclose(Fchoice);
     }
     fclose(Choices_File);
@@ -73,6 +72,7 @@ Node * LoadChoices(int* Arr)
     return Head;
 }
 
+// free the allocated memory
 void unLoadChoices(Node* Head)
 {
     Node* Tmp = Head;
@@ -84,6 +84,9 @@ void unLoadChoices(Node* Head)
     }
 }
 
+// if the node Possibility
+// is 0 (or under 0)
+// delete the node
 void TestForDelete(Node* Head, Node* Goal)
 {
     if (Goal != NULL)
@@ -96,6 +99,8 @@ void TestForDelete(Node* Head, Node* Goal)
         }
 }
 
+// get the counting of
+// choices that we have
 int getLastNumber_OfChoices()
 {
     FILE * Choices_File = fopen("files//CHOICES.txt", "r+");
@@ -119,6 +124,8 @@ int getLastNumber_OfChoices()
     return Num;
 }
 
+// add new problem to game and
+// to the link list
 void addNewProblem_toGame(Node* Head, Problem Pr)
 {
     int Num = getLastNumber_OfChoices() + 1;
@@ -143,7 +150,7 @@ void addNewProblem_toGame(Node* Head, Problem Pr)
 
     fclose(newFile);
     fclose(Choices_File);
-    AddTo_FirstOf_List(Head, Pr, 3);
+    Head = AddTo_FirstOf_List(Head, Pr, 3);
 }
 
 #endif /* !LIST_H */

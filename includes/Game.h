@@ -7,6 +7,7 @@
 #include<stdlib.h>
 #include<string.h>
 
+// this function is just for debbugin'
 void PrintStatus(UserSt UserPr)
 {
     printf("%d\n%d\n%d\n%d\n",
@@ -23,6 +24,7 @@ void PrintStatus(UserSt UserPr)
     printf("\n");
 }
 
+// game function
 void GameRun()
 {
     

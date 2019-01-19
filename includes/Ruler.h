@@ -21,6 +21,7 @@ typedef struct
     int size;
 } UserSt;
 
+// chech if user saved any games
 int isUserExist(char* Name)
 {
     char Address[40];
@@ -36,6 +37,8 @@ int isUserExist(char* Name)
     }
 }
 
+// create a new user file and load the
+// user profile
 UserSt newUser(char* Name)
 {
     char Address[40];
@@ -62,6 +65,8 @@ UserSt newUser(char* Name)
     return UserPr;
 }
 
+// load the old data of a user
+// that saved in the file
 UserSt LoadUserByName(char* Name)
 {
     char Address[40];
@@ -76,6 +81,8 @@ UserSt LoadUserByName(char* Name)
     return UserPr;
 }
 
+// save the struct in the middle of game
+// for handling problems
 void saveThis(UserSt UserPr)
 {
     char Address[40];
